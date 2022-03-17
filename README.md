@@ -112,7 +112,7 @@ If `target_dtid` is specified, it will only delete the relationships which the t
 
 This class can help you deal with the CRUD requirements of properties of digital twins.
 
-Except of the method `get_twin_detail`, the other methods are like a builder pattern in order to update multiple properties of a twin in one API calling.  
+Except for the method `get_twin_detail`, the other methods are like a builder pattern in order to update multiple properties of a twin in one API calling.  
 
 e.g.,  
 
