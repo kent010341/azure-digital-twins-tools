@@ -28,7 +28,7 @@ If `relationship_name` is specified, the response will only contain the relation
     Name of the relationship, if not specified, it will list all relationships.  
 
 * Return  
-  Type: `Response` (from the library `requests`)
+  Type: `Response` (from the library `requests`)  
   To get the content (JSON format string) of response, use `.content`.  
   To get the status code of this HTTP request, use `.status_code`.
 
@@ -48,7 +48,7 @@ Add a relationship from `dtid` to `target_dtid` with name `relationship_name`.
     Name of the relationship.  
 
 * Return  
-  Type: `Response` (from the library `requests`)
+  Type: `Response` (from the library `requests`)  
   To get the status code of this HTTP request, use `.status_code`.
 
 ### delete\_relationship
@@ -64,7 +64,7 @@ Delete a relationship with Id `relationship_id` from `dtid`.
     ID of the relationship.  
 
 * Return  
-  Type: `Response` (from the library `requests`)
+  Type: `Response` (from the library `requests`)  
   To get the status code of this HTTP request, use `.status_code`.
 
 ### find\_relationships\_with\_target
