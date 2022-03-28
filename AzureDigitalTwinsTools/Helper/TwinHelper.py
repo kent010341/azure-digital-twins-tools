@@ -82,7 +82,7 @@ class TwinHelper(RequestHelper):
                 print('Add DT: dtid={}, modelid={}'.format(dtid, modelid))
 
             # avoid adding relationship before the target is created, store it first
-            if rtarget != '' and rname != '':
+            if not pd.isna(rtarget) and not pd.isna(rname):
                relationships_storage.append((dtid, rtarget, rname))
 
         for r in relationships_storage:
