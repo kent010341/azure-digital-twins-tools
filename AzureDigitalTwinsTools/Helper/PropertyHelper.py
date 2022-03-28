@@ -66,7 +66,7 @@ class PropertyHelper(RequestHelper):
             uri = 'digitaltwins/{}'.format(self._dtid)
         elif self._is_preparing_c:
             uri = 'digitaltwins/{}/components/{}' \
-            .format(self._dtid, self.component_path)
+            .format(self._dtid, self._component_path)
 
         return self.request(uri, method, body=json.dumps(self.update_process))
 
