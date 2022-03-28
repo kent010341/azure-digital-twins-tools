@@ -53,6 +53,7 @@ class TwinHelper(RequestHelper):
     def csv_deploy(self, path):
         # read csv
         df = pd.read_csv(path)
+        relationships_storage = list()
 
         for _, row in df.iterrows():
             modelid = row['modelid']
@@ -71,10 +72,15 @@ class TwinHelper(RequestHelper):
                 )
                 print('Add DT: dtid={}, modelid={}'.format(dtid, modelid))
 
+            # avoid adding relationship before the target is created, store it first
+            if rtarget != '' and rname != '':
+               relationships_storage.append((dtid, rtarget, rname))
+
+        for r in relationships_storage:
             self.rh.add_relationship(
-                dtid=dtid, 
-                target_dtid=rtarget, 
-                relationship_name=rname
+                dtid=r[0], 
+                target_dtid=r[1], 
+                relationship_name=r[2]
             )
             print('Add relationship: source={}, target={}, relationship_name={}'
                 .format(dtid, rtarget, rname))
