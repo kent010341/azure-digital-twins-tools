@@ -14,6 +14,7 @@ class TwinHelper(RequestHelper):
     # Add a digital twin with specified model ID, the initial value of 
     # properties and component can be set by using dictionary.
     # 
+    # dtid (str): digital twin ID
     # model (str): dtmi (digital twins model ID)
     # init_property (dict): initial value given to the properties
     #     should look like {"p_1": 123, "p_2":{"sub_p_1": "some value"}}
@@ -43,8 +44,8 @@ class TwinHelper(RequestHelper):
     # The columns should be 'modelid', 'dtid', 'init', 'rtarget', 'rname'
     #     'modelid': model ID
     #     'dtid': Twin ID
-    #     'init_property': (JSON format) Can be empty, initial value of properties
-    #     'init_component': (JSON format) Can be empty, initial value of components
+    #     'init_property': (JSON format) Can be empty, the initial value of properties
+    #     'init_component': (JSON format) Can be empty, the initial value of components
     #     'rname': Relationship name, if 'rname' is specified, 'rtarget' is required.
     #              If multiple relationships are required, just add a new line without 'modelid' and using an existing 'dtid'.
     #     'rtarget': Target twin ID if a relationship is specified
