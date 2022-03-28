@@ -58,12 +58,21 @@ class TwinHelper(RequestHelper):
         for _, row in df.iterrows():
             modelid = row['modelid']
             dtid = row['dtid']
-            init_property = row['init_property']
-            init_component = row['init_component']
+
+            if pd.isna(row['init_property']):
+                init_property = {}
+            else:
+                init_property = json.loads(row['init_property'])
+
+            if pd.isna(row['init_component']):
+                init_component = {}
+            else:
+                init_component = json.loads(row['init_component'])
+
             rname = row['rname']
             rtarget = row['rtarget']
 
-            if modelid != '':
+            if not pd.isna(modelid):
                 self.add_twin(
                     dtid=dtid, 
                     model=modelid, 
@@ -83,7 +92,7 @@ class TwinHelper(RequestHelper):
                 relationship_name=r[2]
             )
             print('Add relationship: source={}, target={}, relationship_name={}'
-                .format(dtid, rtarget, rname))
+                .format(r[0], r[1], r[2]))
 
 
     def _get_add_body(self, model, init_property, init_component):
