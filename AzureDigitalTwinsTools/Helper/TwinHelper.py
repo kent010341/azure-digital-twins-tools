@@ -7,6 +7,10 @@ class TwinHelper(RequestHelper):
 
     def __init__(self, token_path, host_name):
         super().__init__(token_path, host_name)
+<<<<<<< HEAD
+=======
+        self.__rh = RelationshipHelper(token_path, host_name)
+>>>>>>> master
         
     ##
     # Add a digital twin with specified model ID, the initial value of 
@@ -23,7 +27,7 @@ class TwinHelper(RequestHelper):
         # https://docs.microsoft.com/en-us/rest/api/digital-twins/dataplane/twins/digitaltwins_add
         method = requests.put
         uri = 'digitaltwins/{}'.format(dtid)
-        body = self._get_add_body(model, init_property, init_component)
+        body = self.__get_add_body(model, init_property, init_component)
 
         return self.request(uri, method, body=body)
 
@@ -37,7 +41,7 @@ class TwinHelper(RequestHelper):
 
         return self.request(uri, method)
 
-    def _get_add_body(self, model, init_property, init_component):
+    def __get_add_body(self, model, init_property, init_component):
         body = {'$metadata': {'$model': model}}
         
         for k, v in init_property.items():
