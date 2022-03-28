@@ -1,5 +1,11 @@
 # AzureDigitalTwinsTools
 
+## System Requirement
+* Python 3.6 or above
+* pandas
+
+---
+
 ## AzureDigitalTwinsTools.Helper.RelationshipHelper
 `class AzureDigitalTwinsTools.Helper.RelationshipHelper(token_path, host_name)`  
 
@@ -107,10 +113,12 @@ If `target_dtid` is specified, it will only delete the relationships which the t
 * Return  
   `None`
 
+---
+
 ## AzureDigitalTwinsTools.Helper.PropertyHelper
 `class AzureDigitalTwinsTools.Helper.PropertyHelper(token_path, host_name)`  
 
-This class can help you deal with the CRUD requirements of properties of digital twins.
+This class can help you deal with the CRUD requirements of properties of digital twins, including the properties of a component.
 
 Except for the method `get_twin_detail`, the other methods are like a builder pattern in order to update multiple properties of a twin in one API calling.  
 
@@ -147,15 +155,24 @@ Get the details of a digital twin (twin ID: `dtid`), including properties.
   * `dtid`: `str`  
     Digital twin ID. 
 
-### prepare
+### prepare_property
 `prepare(dtid)`  
 
-Start a process. You can use the methods `update_property`, `add_property`, `remove_property` after calling this method.  
+Start a process for updating property. You can use the methods `update_property`, `add_property`, `remove_property` after calling this method.  
 
 * Parameters  
   * `dtid`: `str`  
     Digital twin ID. 
-    
+
+### prepare_component
+`prepare_component(dtid, component_path)`
+
+Start a process for updating component. You can use the methods `update_property`, `add_property`, `remove_property` after calling this method.  
+
+* Parameters  
+  * `dtid`: `str`  
+    Digital twin ID.
+
 ### submit
 `submit()`  
 
@@ -193,3 +210,62 @@ Add an "remove" process to current updating process.
 * Parameters  
   * `key`: `str`  
     Key of property.  
+
+---
+
+## AzureDigitalTwinsTools.Helper.TwinHelper
+`class AzureDigitalTwinsTools.Helper.TwinHelper(token_path, host_name)`  
+
+This class can help you deal with the deployment requirements of digital twins.  
+
+* Parameters
+  * `token_path`: `str`  
+    A text file storing the bearer token get by using this command with Azure CLI.  
+    `az account get-access-token --resource 0b07f429-9f4b-4714-9392-cc5e8e80c8b0`  
+    
+  * `host_name`: `str`  
+    Host name of the Azure Digital Twins Instance. You can get it from the Azure portal.  
+    ![](https://i.imgur.com/tTuBVYM.png)
+
+### add_twin
+`add_twin(dtid, model, init_property={}, init_component={})`  
+
+Add a digital twin with specified model ID, the initial value of properties and component can be set by using dictionary.  
+
+* Parameters  
+  * `dtid`: `str`  
+    Digital twin ID  
+  * `model`: `str`  
+    dtmi (digital twins model ID)  
+  * `init_property`: `dict`  
+    Initial value given to the properties  
+    should look like `{"p_1": 123, "p_2":{"sub_p_1": "some value"}}`  
+  * `init_component`: `dict`  
+    Initial value given to the components  
+    should look like `{"c_1": {"c_1_property": "some value"}}`  
+
+### delete_twin
+`delete_twin(dtid)`  
+
+Delete a digital twin with digital twin ID.  
+
+* Parameters  
+  * `dtid`: `str`  
+    Digital twin ID  
+
+### csv_deploy
+`csv_deploy(path)`  
+
+Deploy digital twins with a csv file.  
+
+* Columns of this CSV file should be `modelid`, `dtid`, `init`, `rtarget`, `rname`.  
+  * `modelid`: model ID
+  * `dtid`: Twin ID
+  * `init_property`: (JSON format) Can be empty, the initial value of properties.
+  * `init_component`: (JSON format) Can be empty, the initial value of components.
+  * `rname`: Relationship name, if `rname` is specified, `rtarget` is required. If multiple relationships are required, just add a new line without modelid and using an existing `dtid`.
+  * `rtarget`: Target twin ID if a relationship (`rname`) is specified.
+
+* Parameters  
+  * `path`: `str`  
+    CSV file path.  
