@@ -1,16 +1,11 @@
 import requests
 import json
-import pandas as pd
 from .RequestHelper import RequestHelper
 
 class TwinHelper(RequestHelper):
 
     def __init__(self, token_path, host_name):
         super().__init__(token_path, host_name)
-<<<<<<< HEAD
-=======
-        self.__rh = RelationshipHelper(token_path, host_name)
->>>>>>> master
         
     ##
     # Add a digital twin with specified model ID, the initial value of 
