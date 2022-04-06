@@ -216,7 +216,7 @@ Add an "remove" process to current updating process.
 ## AzureDigitalTwinsTools.Helper.TwinHelper
 `class AzureDigitalTwinsTools.Helper.TwinHelper(token_path, host_name)`  
 
-This class can help you deal with the deployment requirements of digital twins.  
+This class can help you deal with the basic requirements of digital twins.  
 
 * Parameters
   * `token_path`: `str`  
@@ -253,8 +253,24 @@ Delete a digital twin with digital twin ID.
   * `dtid`: `str`  
     Digital twin ID  
 
+---
+
+## AzureDigitalTwinsTools.Helper.DeployHelper
+`class AzureDigitalTwinsTools.Helper.DeployHelper(token_path, host_name)`  
+
+This class can help you deal with the requirements of batch deployment of digital twins.  
+
+* Parameters
+  * `token_path`: `str`  
+    A text file storing the bearer token get by using this command with Azure CLI.  
+    `az account get-access-token --resource 0b07f429-9f4b-4714-9392-cc5e8e80c8b0`  
+    
+  * `host_name`: `str`  
+    Host name of the Azure Digital Twins Instance. You can get it from the Azure portal.  
+    ![](https://i.imgur.com/tTuBVYM.png)
+
 ### csv_deploy
-`csv_deploy(path)`  
+`csv_deploy(path, atomic=True)`  
 
 Deploy digital twins with a csv file.  
 
@@ -269,3 +285,6 @@ Deploy digital twins with a csv file.
 * Parameters  
   * `path`: `str`  
     CSV file path.  
+
+  * `atomic`: `bool`  
+    If set as `True`, any step failed during this deployment will start a deletion process to delete the twins and relationships just created.  
