@@ -1,5 +1,3 @@
-import uuid
-
 class RequestHelper:
 
     def __init__(self, token_path, host_name):
