@@ -270,7 +270,7 @@ This class can help you deal with the requirements of batch deployment of digita
     ![](https://i.imgur.com/tTuBVYM.png)
 
 ### csv_deploy
-`csv_deploy(path)`  
+`csv_deploy(path, atomic=True)`  
 
 Deploy digital twins with a csv file.  
 
@@ -285,3 +285,6 @@ Deploy digital twins with a csv file.
 * Parameters  
   * `path`: `str`  
     CSV file path.  
+
+  * `atomic`: `bool`  
+    If set as `True`, any step failed during this deployment will start a deletion process to delete the twins and relationships just created.  
