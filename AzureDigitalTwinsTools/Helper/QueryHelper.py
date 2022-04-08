@@ -5,23 +5,47 @@ from .RequestHelper import RequestHelper
 # https://docs.microsoft.com/zh-tw/azure/digital-twins/how-to-query-graph
 class QueryHelper(RequestHelper):
 
-    def __init__(self, self, token_path, host_name):
+    def __init__(self, token_path, host_name):
         super().__init__(token_path, host_name)
 
-    def begin(self):
-        self.__query = 'SELECT * FROM digitaltwins WHERE '
+    def query_twins(self, dtid=None, condition=None):
+        query = 'SELECT * FROM digitaltwins'
 
-    def add_condition(self, condition):
+        if dtid != None or condition != None:
+            query += ' WHERE'
 
-    def add_relationship(self, relationship):
+        if dtid != None:
+            query += ' $dtId=\'{}\''.format(dtid)
+            if condition != None:
+                query += ' AND'
 
-    def commit(self):
-        return self.run_query(self.__query)
+        if condition != None:
+            query += ' ({})'.format(condition)
+
+        return self.run_query(query)
+
+    def query_relationships(self, source=None, target=None, rname=None):
+        query = 'SELECT * FROM relationships'
+
+        if source != None or target != None or rname != None:
+            query += ' WHERE'
+
+        if source != None:
+            query += ' $sourceId=\'{}\''.format(source)
+
+        if target != None:
+            query += ' $targetId=\'{}\''.format(target)
+
+        if rname != None:
+            query += ' $relationshipName=\'{}\''.format(rname)
+
+        return self.run_query(query)
 
     def run_query(self, query):
         method = requests.post
         uri = 'query'
-
         body = '{"query":"' + query + '"}'
 
-        return self.request(uri, method, body=body)
+        resp = self.request(uri, method, body=body).text
+
+        return json.loads(resp)['value']

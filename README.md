@@ -35,7 +35,7 @@ If `relationship_name` is specified, the response will only contain the relation
 
 * Return  
   Type: `Response` (from the library `requests`)  
-  To get the content (JSON format string) of response, use `.content`.  
+  To get the content (JSON format string) of response, use `.text`.  
   To get the status code of this HTTP request, use `.status_code`.
 
 ### add\_relationship
@@ -235,11 +235,14 @@ Add a digital twin with specified model ID, the initial value of properties and 
 * Parameters  
   * `dtid`: `str`  
     Digital twin ID  
+
   * `model`: `str`  
     dtmi (digital twins model ID)  
+
   * `init_property`: `dict`  
     Initial value given to the properties  
     should look like `{"p_1": 123, "p_2":{"sub_p_1": "some value"}}`  
+
   * `init_component`: `dict`  
     Initial value given to the components  
     should look like `{"c_1": {"c_1_property": "some value"}}`  
@@ -252,6 +255,70 @@ Delete a digital twin with digital twin ID.
 * Parameters  
   * `dtid`: `str`  
     Digital twin ID  
+
+---
+
+## AzureDigitalTwinsTools.Helper.QueryHelper
+`class AzureDigitalTwinsTools.Helper.QueryHelper(token_path, host_name)`  
+
+This class can help you deal with the requirements of querying digital twins and relationships.  
+
+* Parameters
+  * `token_path`: `str`  
+    A text file storing the bearer token get by using this command with Azure CLI.  
+    `az account get-access-token --resource 0b07f429-9f4b-4714-9392-cc5e8e80c8b0`  
+    
+  * `host_name`: `str`  
+    Host name of the Azure Digital Twins Instance. You can get it from the Azure portal.  
+    ![](https://i.imgur.com/tTuBVYM.png)
+
+### query_twins
+`query_twins(dtid=None, condition=None)`
+
+Query twins.
+
+* Parameters  
+  * `dtid`: `str` (Default: `None`)  
+    Source digital twin ID.  
+
+  * `condition `: `str` (Default: `None`)  
+    Other condition can be placed here. 
+
+* Return  
+  Type: `list`  
+  The matched twins.
+
+### query_relationships
+`query_relationships(source=None, target=None, rname=None)`
+
+Query relationships.
+
+* Parameters  
+  * `source `: `str` (Default: `None`)  
+    Source digital twin ID.  
+    
+  * `target `: `str` (Default: `None`)  
+    Target digital twin ID.  
+
+  * `rname `: `str` (Default: `None`)  
+    Relationship name. 
+
+* Return  
+  Type: `list`  
+  The matched relationships.
+
+### run_query
+`run_query(self, query)`  
+
+Run a query string.
+
+* Parameters  
+  * `query `: `str`   
+    Query string.  
+
+* Return  
+  Type: `list`  
+  The matched objects.
 
 ---
 
