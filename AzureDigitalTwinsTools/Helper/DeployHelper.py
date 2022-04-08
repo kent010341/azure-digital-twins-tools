@@ -71,9 +71,9 @@ class DeployHelper(RequestHelper):
         for r in relationships_storage:
             try:
                 resp = self.__rh.add_relationship(
-                    dtid=r[0], 
-                    target_dtid=r[1], 
-                    relationship_name=r[2]
+                    source=r[0], 
+                    target=r[1], 
+                    rname=r[2]
                 ).text
 
                 rid = json.loads(resp)['$relationshipId']
@@ -89,8 +89,8 @@ class DeployHelper(RequestHelper):
         print('Something went wrong, start deleting twins and relationships created with this file.')
         for r in succeed_relationships:
             self.__rh.delete_relationship(
-                dtid=r[0],
-                relationship_id=r[1]
+                source=r[0],
+                rid=r[1]
             )
             print('Delete relationship: source={}, relationship_id={}'
                 .format(r[0], r[1]))
