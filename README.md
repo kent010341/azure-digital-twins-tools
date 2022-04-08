@@ -355,3 +355,8 @@ Deploy digital twins with a csv file.
 
   * `atomic`: `bool`  
     If set as `True`, any step failed during this deployment will start a deletion process to delete the twins and relationships just created.  
+
+### clear
+`clear()`
+
+Clean all twins and relationships.

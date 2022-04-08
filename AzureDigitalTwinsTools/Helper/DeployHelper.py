@@ -3,6 +3,7 @@ import pandas as pd
 from .RequestHelper import RequestHelper
 from .RelationshipHelper import RelationshipHelper
 from .TwinHelper import TwinHelper
+from .QueryHelper import QueryHelper
 
 class DeployHelper(RequestHelper):
 
@@ -10,6 +11,7 @@ class DeployHelper(RequestHelper):
         super().__init__(token_path, host_name)
         self.__rh = RelationshipHelper(token_path, host_name)
         self.__th = TwinHelper(token_path, host_name)
+        self.__qh = QueryHelper(token_path, host_name)
 
     ##
     # Deploy digital twins with a csv file.
@@ -84,6 +86,21 @@ class DeployHelper(RequestHelper):
             except:
                 if atomic:
                     self.__atomic(succeed_twins, succeed_relationships)
+
+    def clear(self):
+        rs = self.__qh.query_relationships()
+        for r in rs:
+            self.__rh.delete_relationship(
+                source=r['$sourceId'],
+                rid=r['$relationshipId']
+            )
+            print('Delete relationship: source={}, relationship_id={}'
+                .format(r['$sourceId'], r['$relationshipId']))
+
+        twins = self.__qh.query_twins()
+        for twin in twins:
+            self.__th.delete_twin(dtid=twin['$dtId'])
+            print('Delete twin:', twin['$dtId'])
 
     def __atomic(self, succeed_twins, succeed_relationships=[]):
         print('Something went wrong, start deleting twins and relationships created with this file.')
