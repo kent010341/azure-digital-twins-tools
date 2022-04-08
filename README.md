@@ -21,16 +21,16 @@ This class can help you deal with the CRUD requirements of relationships between
     ![](https://i.imgur.com/tTuBVYM.png)
 
 ### list\_relationships
-`list_relationships(dtid, relationship_name=None)`  
+`list_relationships(source, rname=None)`  
 
-List all relationships which the source is `dtid`.  
-If `relationship_name` is specified, the response will only contain the relationships with this name.
+List all relationships which the source is `source`.  
+If `rname` is specified, the response will only contain the relationships with this name.
 
 * Parameters  
-  * `dtid`: `str`  
+  * `source`: `str`  
     Digital twin ID.  
 
-  * `relationship_name`: `str` (Default: `None`)  
+  * `rname`: `str` (Default: `None`)  
     Name of the relationship, if not specified, it will list all relationships.  
 
 * Return  
@@ -39,18 +39,18 @@ If `relationship_name` is specified, the response will only contain the relation
   To get the status code of this HTTP request, use `.status_code`.
 
 ### add\_relationship
-`add_relationship(dtid, target_dtid, relationship_name)`  
+`add_relationship(source, target, rname)`  
 
-Add a relationship from `dtid` to `target_dtid` with name `relationship_name`.  
+Add a relationship from `source` to `target` with name `rname`.  
 
 * Parameters  
-  * `dtid`: `str`  
+  * `source`: `str`  
     Source digital twin ID.  
 
-  * `target_dtid`: `str`  
+  * `target`: `str`  
     Target digital twin ID.  
 
-  * `relationship_name`: `str`  
+  * `rname`: `str`  
     Name of the relationship.  
 
 * Return  
@@ -58,15 +58,15 @@ Add a relationship from `dtid` to `target_dtid` with name `relationship_name`.
   To get the status code of this HTTP request, use `.status_code`.
 
 ### delete\_relationship
-`delete_relationship(dtid, relationship_id)`  
+`delete_relationship(source, rid)`  
 
-Delete a relationship with Id `relationship_id` from `dtid`.  
+Delete a relationship with Id `rid` from `source`.  
 
 * Parameters  
-  * `dtid`: `str`  
+  * `source`: `str`  
     Source digital twin ID.  
 
-  * `relationship_id`: `str`  
+  * `rid`: `str`  
     ID of the relationship.  
 
 * Return  
@@ -74,19 +74,19 @@ Delete a relationship with Id `relationship_id` from `dtid`.
   To get the status code of this HTTP request, use `.status_code`.
 
 ### find\_relationships\_with\_target
-`find_relationships_with_target(dtid, target_dtid, relationship_name=None)`  
+`find_relationships_with_target(source, target, rname=None)`  
 
-List all relationships which the source is `dtid` and the target is `target_dtid`.  
-If `relationship_name` is specified, the response will only contain the relationships with this name.
+List all relationships which the source is `source` and the target is `target`.  
+If `rname` is specified, the response will only contain the relationships with this name.
 
 * Parameters  
-  * `dtid`: `str`  
+  * `source`: `str`  
     Source digital twin ID.  
 
-  * `target_dtid`: `str`  
+  * `target`: `str`  
     Target digital twin ID.
 
-  * `relationship_name`: `str` (Default: `None`)  
+  * `rname`: `str` (Default: `None`)  
     Name of the relationship, if not specified, it will list all relationships.  
 
 * Return  
@@ -94,20 +94,20 @@ If `relationship_name` is specified, the response will only contain the relation
   The `dict` inside contains 4 keys: `relationshipId`, `relationshipName`, `sourceId`, `targetId`.
 
 ### find\_and\_delete\_relationships
-`find_and_delete_relationships(dtid, relationship_name=None, target_dtid=None)`
+`find_and_delete_relationships(source, rname=None, target=None)`
 
-Delete all relationships which the source is `dtid`.  
-If `relationship_name` is specified, it will only delete the relationships with this name.  
-If `target_dtid` is specified, it will only delete the relationships which the target is this ID.  
+Delete all relationships which the source is `source`.  
+If `rname` is specified, it will only delete the relationships with this name.  
+If `target` is specified, it will only delete the relationships which the target is this ID.  
 
 * Parameters  
-  * `dtid`: `str`  
+  * `source`: `str`  
     Source digital twin ID.  
 
-  * `target_dtid`: `str` (Default: `None`)  
+  * `target`: `str` (Default: `None`)  
     Target digital twin ID.
 
-  * `relationship_name`: `str` (Default: `None`)  
+  * `rname`: `str` (Default: `None`)  
     Name of the relationship, if not specified, it will delete all relationships matched.  
 
 * Return  

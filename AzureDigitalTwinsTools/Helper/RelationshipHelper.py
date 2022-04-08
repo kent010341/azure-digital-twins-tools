@@ -13,45 +13,45 @@ class RelationshipHelper(RequestHelper):
     def update_relationship(self):
         pass
 
-    def list_relationships(self, dtid, relationship_name=None):
+    def list_relationships(self, source, rname=None):
         # https://docs.microsoft.com/en-us/rest/api/digital-twins/dataplane/twins/digitaltwins_listrelationships
         method = requests.get
-        uri = 'digitaltwins/{}/relationships'.format(dtid)
+        uri = 'digitaltwins/{}/relationships'.format(source)
 
-        return self.request(uri, method, uri_params=relationship_name)
+        return self.request(uri, method, uri_params=rname)
 
-    def add_relationship(self, dtid, target_dtid, relationship_name):
+    def add_relationship(self, source, target, rname):
         # https://docs.microsoft.com/en-us/rest/api/digital-twins/dataplane/twins/digitaltwins_addrelationship
         method = requests.put
-        uri = 'digitaltwins/{}/relationships/{}'.format(dtid, str(uuid.uuid4()))
-        body = '{"$targetId": "' + target_dtid + \
-                '","$relationshipName": "' + relationship_name + '"}'
+        uri = 'digitaltwins/{}/relationships/{}'.format(source, str(uuid.uuid4()))
+        body = '{"$targetId": "' + target + \
+                '","$relationshipName": "' + rname + '"}'
 
         return self.request(uri, method, body=body)
 
-    def delete_relationship(self, dtid, relationship_id):
+    def delete_relationship(self, source, rid):
         # https://docs.microsoft.com/en-us/rest/api/digital-twins/dataplane/twins/digitaltwins_deleterelationship
         method = requests.delete
-        uri = 'digitaltwins/{}/relationships/{}'.format(dtid, relationship_id)
+        uri = 'digitaltwins/{}/relationships/{}'.format(source, rid)
 
         return self.request(uri, method)
 
-    def find_relationships_with_target(self, dtid, target_dtid, relationship_name=None):
+    def find_relationships_with_target(self, source, target, rname=None):
         return self.__qh.query_relationships(
-            source=dtid, 
-            target=target_dtid, 
-            rname=relationship_name
+            source=source, 
+            target=target, 
+            rname=rname
         )
 
-    def find_and_delete_relationships(self, dtid, relationship_name=None, target_dtid=None):
+    def find_and_delete_relationships(self, source, rname=None, target=None):
         rs = self.__qh.query_relationships(
-            source=dtid, 
-            target=target_dtid, 
-            rname=relationship_name
+            source=source, 
+            target=target, 
+            rname=rname
         )
 
         for r in rs:
             self.delete_relationship(
-                dtid=dtid,
-                relationship_id=r['$relationshipId']
+                source=source,
+                rid=r['$relationshipId']
             )
