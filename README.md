@@ -341,12 +341,12 @@ This class can help you deal with the requirements of batch deployment of digita
 
 Deploy digital twins with a csv file.  
 
-* Columns of this CSV file should be `modelid`, `dtid`, `init`, `rtarget`, `rname`.  
+* Columns of this CSV file should be `modelid`, `dtid`, `init_property`, `init_component`, `rtarget`, `rname`.  
   * `modelid`: model ID
   * `dtid`: Twin ID
   * `init_property`: (JSON format) Can be empty, the initial value of properties.
   * `init_component`: (JSON format) Can be empty, the initial value of components.
-  * `rname`: Relationship name, if `rname` is specified, `rtarget` is required. If multiple relationships are required, just add a new line without modelid and using an existing `dtid`.
+  * `rname`: Relationship name, if `rname` is specified, `rtarget` is required. If multiple relationships are required, just add a new line without `modelid` and using an existing `dtid`.
   * `rtarget`: Target twin ID if a relationship (`rname`) is specified.
 
 * Parameters  
