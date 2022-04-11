@@ -63,6 +63,7 @@ class DeployHelper:
                 except:
                     if atomic:
                         self.__atomic(succeed_twins)
+                    return
 
             # avoid adding relationship before the target is created, store it first
             if not pd.isna(rtarget) and not pd.isna(rname):
@@ -84,6 +85,7 @@ class DeployHelper:
             except:
                 if atomic:
                     self.__atomic(succeed_twins, succeed_relationships)
+                return
 
     def clear(self):
         rs = self.__qh.query_relationships()
