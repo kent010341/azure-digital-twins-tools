@@ -13,7 +13,7 @@ class DeployHelper:
 
     ##
     # Deploy digital twins with a csv file.
-    # The columns should be 'modelid', 'dtid', 'init', 'rtarget', 'rname'
+    # The columns should be 'modelid', 'dtid', 'init_property', 'init_component', 'rtarget', 'rname'
     #     'modelid': model ID
     #     'dtid': Twin ID
     #     'init_property': (JSON format) Can be empty, the initial value of properties
