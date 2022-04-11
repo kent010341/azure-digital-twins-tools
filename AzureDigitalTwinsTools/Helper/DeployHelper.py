@@ -1,14 +1,12 @@
 import json
 import pandas as pd
-from .RequestHelper import RequestHelper
 from .RelationshipHelper import RelationshipHelper
 from .TwinHelper import TwinHelper
 from .QueryHelper import QueryHelper
 
-class DeployHelper(RequestHelper):
+class DeployHelper:
 
     def __init__(self, token_path, host_name):
-        super().__init__(token_path, host_name)
         self.__rh = RelationshipHelper(token_path, host_name)
         self.__th = TwinHelper(token_path, host_name)
         self.__qh = QueryHelper(token_path, host_name)
