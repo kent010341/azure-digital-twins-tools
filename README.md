@@ -6,6 +6,37 @@
 
 ---
 
+## Table of contents
+* [ModelHelper](#azuredigitaltwinstoolshelpermodelhelper)  
+  * [list_models](#list_models)  
+  * [find_model_components_list](#find_model_components_list)
+* [RelationshipHelper](#azuredigitaltwinstoolshelperrelationshiphelper)  
+  * [list_relationships](#list_relationships)
+  * [add_relationship](#add_relationship)
+  * [delete_relationship](#delete_relationship)
+  * [find_relationships_with_target](#find_relationships_with_target)
+  * [find_and_delete_relationships](#find_and_delete_relationships)
+* [PropertyHelper](#azuredigitaltwinstoolshelperpropertyhelper)  
+  * [get_twin_detail](#get_twin_detail)  
+  * [prepare_property](#prepare_property)
+  * [prepare_component](#prepare_component)
+  * [submit](#submit)
+  * [update_property](#update_property)
+  * [add_property](#add_property)
+  * [remove_property](#remove_property)
+* [TwinHelper](#azuredigitaltwinstoolshelpertwinhelper)  
+  * [add_twin](#add_twin)
+  * [delete_twin](#delete_twin)
+* [QueryHelper](#azuredigitaltwinstoolshelperqueryhelper)  
+  * [query_twins](#query_twins)
+  * [query_relationships](#query_relationships)
+  * [run_query](#run_query)
+* [DeployHelper](#azuredigitaltwinstoolshelperqueryhelper)  
+  * [csv_deploy](#csv_deploy)
+  * [clear](#clear)
+
+---
+
 ## AzureDigitalTwinsTools.Helper
 All helpers requires two parameters to initialize.
 * `token_path`: `str`  
