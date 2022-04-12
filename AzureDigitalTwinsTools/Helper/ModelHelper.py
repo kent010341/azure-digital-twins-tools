@@ -32,9 +32,6 @@ class ModelHelper(RequestHelper):
         curr_model = model
         has_parent = True
 
-        # print(dict_models[curr_model])
-        # print(type(dict_models[curr_model]))
-
         while has_parent:
             try:
                 contents = dict_models[curr_model]['contents']
