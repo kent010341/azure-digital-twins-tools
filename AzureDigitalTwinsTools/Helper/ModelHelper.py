@@ -1,6 +1,5 @@
 import requests
 import json
-from copy import deepcopy
 from .RequestHelper import RequestHelper
 
 class ModelHelper(RequestHelper):
