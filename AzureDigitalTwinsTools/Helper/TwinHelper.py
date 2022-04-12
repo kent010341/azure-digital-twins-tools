@@ -1,11 +1,13 @@
 import requests
 import json
 from .RequestHelper import RequestHelper
+from .ModelHelper import ModelHelper
 
 class TwinHelper(RequestHelper):
 
     def __init__(self, token_path, host_name):
         super().__init__(token_path, host_name)
+        self.__mh = ModelHelper(token_path, host_name)
         
     ##
     # Add a digital twin with specified model ID, the initial value of 
@@ -42,9 +44,20 @@ class TwinHelper(RequestHelper):
         for k, v in init_property.items():
             body[k] = v
 
+        if len(init_component.items()) == 0:
+            init_component = self.__get_empty_component(model)
+
         for k, v in init_component.items():
             component_value = v
             component_value['$metadata'] = {}
             body[k] = component_value
 
         return json.dumps(body)
+
+    def __get_empty_component(self, model):
+        components = {}
+        component_list = self.__mh.find_model_components_list(model)
+        for c in component_list:
+            components[c] = {}
+
+        return components
