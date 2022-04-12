@@ -6,6 +6,17 @@
 
 ---
 
+## Table of contents
+* [AzureDigitalTwinsTools.Helper](#azuredigitaltwinstoolshelper)  
+  * [ModelHelper](#azuredigitaltwinstoolshelpermodelhelper)  
+  * [RelationshipHelper](#azuredigitaltwinstoolshelperrelationshiphelper)  
+  * [PropertyHelper](#azuredigitaltwinstoolshelperpropertyhelper)  
+  * [TwinHelper](#azuredigitaltwinstoolshelpertwinhelper)  
+  * [QueryHelper](#azuredigitaltwinstoolshelperqueryhelper)  
+  * [DeployHelper](#azuredigitaltwinstoolshelperqueryhelper)  
+
+---
+
 ## AzureDigitalTwinsTools.Helper
 All helpers requires two parameters to initialize.
 * `token_path`: `str`  
