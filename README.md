@@ -6,19 +6,48 @@
 
 ---
 
+## AzureDigitalTwinsTools.Helper
+All helpers requires two parameters to initialize.
+* `token_path`: `str`  
+    A text file storing the bearer token get by using this command with Azure CLI.  
+    `az account get-access-token --resource 0b07f429-9f4b-4714-9392-cc5e8e80c8b0`  
+    
+* `host_name`: `str`  
+  Host name of the Azure Digital Twins Instance. You can get it from the Azure portal.  
+  ![](https://i.imgur.com/tTuBVYM.png)
+
+---
+
+## AzureDigitalTwinsTools.Helper.ModelHelper
+`class AzureDigitalTwinsTools.Helper.RelationshipHelper(token_path, host_name)`  
+
+This class can help you deal with the searching requirements of model.  
+
+### list_models
+`list_models(model=None)`  
+
+List all model if `model` is specified.  
+If `model` is specified, list all related models including extending and component.  
+
+* Parameters  
+  * `model`: `str`  
+    Model ID.
+
+### find_model\_components\_list
+`find_model_components_list(model)`  
+
+Get a list of the name of components of `model`.  
+
+* Parameters  
+  * `model`: `str`  
+    Model ID.
+
+---
+
 ## AzureDigitalTwinsTools.Helper.RelationshipHelper
 `class AzureDigitalTwinsTools.Helper.RelationshipHelper(token_path, host_name)`  
 
 This class can help you deal with the CRUD requirements of relationships between digital twins.
-
-* Parameters
-  * `token_path`: `str`  
-    A text file storing the bearer token get by using this command with Azure CLI.  
-    `az account get-access-token --resource 0b07f429-9f4b-4714-9392-cc5e8e80c8b0`  
-    
-  * `host_name`: `str`  
-    Host name of the Azure Digital Twins Instance. You can get it from the Azure portal.  
-    ![](https://i.imgur.com/tTuBVYM.png)
 
 ### list\_relationships
 `list_relationships(source, rname=None)`  
@@ -128,23 +157,13 @@ e.g.,
 from AzureDigitalTwinsTools.Helper import PropertyHelper
 
 ph = PropertyHelper(token_path="...", host_name="...")
-ph.prepare(dtid="Room1")
+ph.prepare_property(dtid="Room1")
   .update_property(key="temperature", value=60)
   .update_property(key="humidity", value=55)
   .add_property(key="name", value="sensor")
   .remove_property(key="remove")
   .submit()
 ```
-
-
-* Parameters
-  * `token_path`: `str`  
-    A text file storing the bearer token get by using this command with Azure CLI.  
-    `az account get-access-token --resource 0b07f429-9f4b-4714-9392-cc5e8e80c8b0`  
-    
-  * `host_name`: `str`  
-    Host name of the Azure Digital Twins Instance. You can get it from the Azure portal.  
-    ![](https://i.imgur.com/tTuBVYM.png)
 
 ### get\_twin\_detail
 `get_twin_detail(dtid)`  
@@ -218,15 +237,6 @@ Add an "remove" process to current updating process.
 
 This class can help you deal with the basic requirements of digital twins.  
 
-* Parameters
-  * `token_path`: `str`  
-    A text file storing the bearer token get by using this command with Azure CLI.  
-    `az account get-access-token --resource 0b07f429-9f4b-4714-9392-cc5e8e80c8b0`  
-    
-  * `host_name`: `str`  
-    Host name of the Azure Digital Twins Instance. You can get it from the Azure portal.  
-    ![](https://i.imgur.com/tTuBVYM.png)
-
 ### add_twin
 `add_twin(dtid, model, init_property={}, init_component={})`  
 
@@ -262,15 +272,6 @@ Delete a digital twin with digital twin ID.
 `class AzureDigitalTwinsTools.Helper.QueryHelper(token_path, host_name)`  
 
 This class can help you deal with the requirements of querying digital twins and relationships.  
-
-* Parameters
-  * `token_path`: `str`  
-    A text file storing the bearer token get by using this command with Azure CLI.  
-    `az account get-access-token --resource 0b07f429-9f4b-4714-9392-cc5e8e80c8b0`  
-    
-  * `host_name`: `str`  
-    Host name of the Azure Digital Twins Instance. You can get it from the Azure portal.  
-    ![](https://i.imgur.com/tTuBVYM.png)
 
 ### query_twins
 `query_twins(dtid=None, condition=None)`
@@ -326,15 +327,6 @@ Run a query string.
 `class AzureDigitalTwinsTools.Helper.DeployHelper(token_path, host_name)`  
 
 This class can help you deal with the requirements of batch deployment of digital twins.  
-
-* Parameters
-  * `token_path`: `str`  
-    A text file storing the bearer token get by using this command with Azure CLI.  
-    `az account get-access-token --resource 0b07f429-9f4b-4714-9392-cc5e8e80c8b0`  
-    
-  * `host_name`: `str`  
-    Host name of the Azure Digital Twins Instance. You can get it from the Azure portal.  
-    ![](https://i.imgur.com/tTuBVYM.png)
 
 ### csv_deploy
 `csv_deploy(path, atomic=True)`  
