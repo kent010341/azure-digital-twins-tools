@@ -26,7 +26,13 @@ class TwinHelper(RequestHelper):
         uri = 'digitaltwins/{}'.format(dtid)
         body = self.__get_add_body(model, init_property, init_component)
 
-        return self.request(uri, method, body=body)
+        try:
+            resp = self.request(uri, method, body=body)
+        except:
+            body = self.__get_add_body(model, init_property, init_component, search=True)
+            resp = self.request(uri, method, body=body)
+
+        return resp
 
     ##
     # Delete a digital twin with digital twin ID
@@ -38,26 +44,27 @@ class TwinHelper(RequestHelper):
 
         return self.request(uri, method)
 
-    def __get_add_body(self, model, init_property, init_component):
+    def __get_add_body(self, model, init_property, init_component, search=False):
         body = {'$metadata': {'$model': model}}
         
         for k, v in init_property.items():
             body[k] = v
 
-        if len(init_component.items()) == 0:
-            init_component = self.__get_empty_component(model)
+        if not search:
+            for k, v in init_component.items():
+                component_value = v
+                component_value['$metadata'] = {}
+                body[k] = component_value
 
-        for k, v in init_component.items():
-            component_value = v
-            component_value['$metadata'] = {}
-            body[k] = component_value
+        else:
+            component_list = self.__mh.find_model_components_list(model)
+
+            keys = init_component.keys()
+            for c in component_list:
+                v = init_component[c] if c in keys else {}
+
+                component_value = v
+                component_value['$metadata'] = {}
+                body[c] = component_value
 
         return json.dumps(body)
-
-    def __get_empty_component(self, model):
-        components = {}
-        component_list = self.__mh.find_model_components_list(model)
-        for c in component_list:
-            components[c] = {}
-
-        return components
