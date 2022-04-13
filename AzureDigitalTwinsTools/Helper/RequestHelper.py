@@ -7,7 +7,7 @@ class RequestHelper:
     def request(self, uri, method, uri_params=None, body=None):
         url = self.__get_url(uri, uri_params)
         response = method(url, data=body, headers=self.__get_headers())
-        self.__assert_resp(response)
+        response.raise_for_status()
 
         return response
 
@@ -37,8 +37,3 @@ class RequestHelper:
                     opt += '&' + param
 
         return opt
-
-    def __assert_resp(self, response):
-        assert str(response.status_code)[0] == '2', \
-                'status code not 2xx ({})'.format(response.status_code)
-
