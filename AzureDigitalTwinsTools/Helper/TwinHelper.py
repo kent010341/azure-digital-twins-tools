@@ -8,6 +8,7 @@ class TwinHelper(RequestHelper):
     def __init__(self, token_path, host_name):
         super().__init__(token_path, host_name)
         self.__mh = ModelHelper(token_path, host_name)
+        self.__found_component = {}
         
     ##
     # Add a digital twin with specified model ID, the initial value of 
@@ -50,14 +51,17 @@ class TwinHelper(RequestHelper):
         for k, v in init_property.items():
             body[k] = v
 
-        if not search:
+        if not search and not (model in self.__found_component.keys()):
             for k, v in init_component.items():
                 component_value = v
                 component_value['$metadata'] = {}
                 body[k] = component_value
-
         else:
-            component_list = self.__mh.find_model_components_list(model)
+            try:
+                component_list = self.__found_component[model]
+            except:
+                component_list = self.__mh.find_model_components_list(model)
+                self.__found_component[model] = component_list
 
             keys = init_component.keys()
             for c in component_list:
