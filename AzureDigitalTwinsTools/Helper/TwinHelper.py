@@ -60,8 +60,8 @@ class TwinHelper(RequestHelper):
             try:
                 component_list = self.__found_component[model]
             except:
-                component_list = self.__mh.find_model_components_list(model)
-                self.__found_component[model] = component_list
+                self.__found_component = self.__mh.find_model_components_list(model)
+                component_list = self.__found_component[model]
 
             keys = init_component.keys()
             for c in component_list:

@@ -60,7 +60,8 @@ class DeployHelper:
                     )
                     print('Add DT: dtid={}, modelid={}'.format(dtid, modelid))
                     succeed_twins.append(dtid)
-                except:
+                except Exception as e:
+                    print('Exception:', e)
                     if atomic:
                         self.__atomic(succeed_twins)
                     return
@@ -82,7 +83,8 @@ class DeployHelper:
                 print('Add relationship: source={}, target={}, relationship_name={}, relationship_id={}'
                     .format(r[0], r[1], r[2], rid))
                 succeed_relationships.append((r[0], rid))
-            except:
+            except Exception as e:
+                print('Exception:', e)
                 if atomic:
                     self.__atomic(succeed_twins, succeed_relationships)
                 return
