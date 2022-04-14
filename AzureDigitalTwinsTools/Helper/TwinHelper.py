@@ -51,20 +51,20 @@ class TwinHelper(RequestHelper):
         for k, v in init_property.items():
             body[k] = v
 
-        if not search and not (model in self.__found_component.keys()):
+        if not search and self.__found_component.get(model) == None:
             for k, v in init_component.items():
                 component_value = v
                 component_value['$metadata'] = {}
                 body[k] = component_value
         else:
-            if self.__found_component.get(model) == '':
+            if self.__found_component.get(model) == None:
                 self.__found_component = self.__mh.find_model_components_list(model)
                 
             component_list = self.__found_component[model]
 
             keys = init_component.keys()
             for c in component_list:
-                v = init_component[c] if c in keys else {}
+                v = init_component[c] if init_component.get(c) != None else {}
 
                 component_value = v
                 component_value['$metadata'] = {}

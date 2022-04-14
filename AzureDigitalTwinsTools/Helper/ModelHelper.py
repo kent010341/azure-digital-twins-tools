@@ -35,16 +35,16 @@ class ModelHelper(RequestHelper):
         while is_searching:
             curr_component_dict[curr_model] = []
 
-            if dict_models[curr_model].get('contents') != '':
+            if dict_models[curr_model].get('contents') != None:
                 curr_component_dict = self.__append_component(
                     curr_component_dict, dict_models[curr_model]['contents'], curr_model)
 
-            if dict_models[curr_model].get('extends') != '':
+            if dict_models[curr_model].get('extends') != None:
                 # find parent
                 curr_model = dict_models[curr_model]['extends']
 
                 # check if the parent has searched, if so, add to the list
-                if curr_model in self.__component_dict.keys():
+                if self.__component_dict.get(curr_model) != None:
                     curr_component_dict = self.__append_with_found(
                         curr_component_dict, curr_model)
                     is_searching = False
