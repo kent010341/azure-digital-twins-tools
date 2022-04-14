@@ -33,14 +33,13 @@ class ModelHelper(RequestHelper):
         curr_component_dict = {}
 
         while is_searching:
-            model_keys = dict_models[curr_model].keys()
             curr_component_dict[curr_model] = []
 
-            if 'contents' in model_keys:
+            if dict_models[curr_model].get('contents') != '':
                 curr_component_dict = self.__append_component(
                     curr_component_dict, dict_models[curr_model]['contents'], curr_model)
 
-            if 'extends' in model_keys:
+            if dict_models[curr_model].get('extends') != '':
                 # find parent
                 curr_model = dict_models[curr_model]['extends']
 

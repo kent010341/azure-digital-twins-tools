@@ -57,11 +57,10 @@ class TwinHelper(RequestHelper):
                 component_value['$metadata'] = {}
                 body[k] = component_value
         else:
-            try:
-                component_list = self.__found_component[model]
-            except:
+            if self.__found_component.get(model) == '':
                 self.__found_component = self.__mh.find_model_components_list(model)
-                component_list = self.__found_component[model]
+                
+            component_list = self.__found_component[model]
 
             keys = init_component.keys()
             for c in component_list:
