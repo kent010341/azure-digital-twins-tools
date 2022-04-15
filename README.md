@@ -38,19 +38,24 @@
 ---
 
 ## AzureDigitalTwinsTools.Helper
-All helpers requires two parameters to initialize.
-* `token_path`: `str`  
-    A text file storing the bearer token get by using this command with Azure CLI.  
-    `az account get-access-token --resource 0b07f429-9f4b-4714-9392-cc5e8e80c8b0`  
+All helpers requires 3 parameters to initialize. Either `token_path` or `token` should be given.  
     
 * `host_name`: `str`  
   Host name of the Azure Digital Twins Instance. You can get it from the Azure portal.  
-  ![](https://i.imgur.com/tTuBVYM.png)
+  ![](https://i.imgur.com/tTuBVYM.png)  
+
+* `token_path`: `str`  
+  The path of a text file storing the bearer token get by using this command with Azure CLI.  
+  `az account get-access-token --resource 0b07f429-9f4b-4714-9392-cc5e8e80c8b0`  
+
+* `token`: `str`  
+  A string of token. Get by using this command with Azure CLI.  
+  `az account get-access-token --resource 0b07f429-9f4b-4714-9392-cc5e8e80c8b0`  
 
 ---
 
 ## AzureDigitalTwinsTools.Helper.ModelHelper
-`class AzureDigitalTwinsTools.Helper.RelationshipHelper(token_path, host_name)`  
+`class AzureDigitalTwinsTools.Helper.RelationshipHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the searching requirements of model.  
 
@@ -76,7 +81,7 @@ Get a list of the name of components of `model`.
 ---
 
 ## AzureDigitalTwinsTools.Helper.RelationshipHelper
-`class AzureDigitalTwinsTools.Helper.RelationshipHelper(token_path, host_name)`  
+`class AzureDigitalTwinsTools.Helper.RelationshipHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the CRUD requirements of relationships between digital twins.
 
@@ -176,7 +181,7 @@ If `target` is specified, it will only delete the relationships which the target
 ---
 
 ## AzureDigitalTwinsTools.Helper.PropertyHelper
-`class AzureDigitalTwinsTools.Helper.PropertyHelper(token_path, host_name)`  
+`class AzureDigitalTwinsTools.Helper.PropertyHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the CRUD requirements of properties of digital twins, including the properties of a component.
 
@@ -264,7 +269,7 @@ Add an "remove" process to current updating process.
 ---
 
 ## AzureDigitalTwinsTools.Helper.TwinHelper
-`class AzureDigitalTwinsTools.Helper.TwinHelper(token_path, host_name)`  
+`class AzureDigitalTwinsTools.Helper.TwinHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the basic requirements of digital twins.  
 
@@ -300,7 +305,7 @@ Delete a digital twin with digital twin ID.
 ---
 
 ## AzureDigitalTwinsTools.Helper.QueryHelper
-`class AzureDigitalTwinsTools.Helper.QueryHelper(token_path, host_name)`  
+`class AzureDigitalTwinsTools.Helper.QueryHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the requirements of querying digital twins and relationships.  
 
@@ -355,7 +360,7 @@ Run a query string.
 ---
 
 ## AzureDigitalTwinsTools.Helper.DeployHelper
-`class AzureDigitalTwinsTools.Helper.DeployHelper(token_path, host_name)`  
+`class AzureDigitalTwinsTools.Helper.DeployHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the requirements of batch deployment of digital twins.  
 

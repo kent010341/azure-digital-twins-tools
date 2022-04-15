@@ -4,8 +4,8 @@ from .RequestHelper import RequestHelper
 
 class ModelHelper(RequestHelper):
 
-    def __init__(self, token_path, host_name):
-        super().__init__(token_path, host_name)
+    def __init__(self, host_name, token_path=None, token=None):
+        super().__init__(host_name, token_path, token)
         self.__component_dict = {}
 
     def list_models(self, model=None):

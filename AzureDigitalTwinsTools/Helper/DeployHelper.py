@@ -6,10 +6,11 @@ from .QueryHelper import QueryHelper
 
 class DeployHelper:
 
-    def __init__(self, token_path, host_name):
-        self.__rh = RelationshipHelper(token_path, host_name)
-        self.__th = TwinHelper(token_path, host_name)
-        self.__qh = QueryHelper(token_path, host_name)
+    def __init__(self, host_name, token_path=None, token=None):
+        self.__rh = RelationshipHelper(
+            host_name=host_name, token_path=token_path, token=token)
+        self.__th = TwinHelper(host_name=host_name, token=self.__rh.token)
+        self.__qh = QueryHelper(host_name=host_name, token=self.__rh.token)
 
     ##
     # Deploy digital twins with a csv file.

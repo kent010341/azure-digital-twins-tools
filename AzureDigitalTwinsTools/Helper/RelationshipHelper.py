@@ -6,9 +6,9 @@ from .QueryHelper import QueryHelper
 
 class RelationshipHelper(RequestHelper):
 
-    def __init__(self, token_path, host_name):
-        super().__init__(token_path, host_name)
-        self.__qh = QueryHelper(token_path, host_name)
+    def __init__(self, host_name, token_path=None, token=None):
+        super().__init__(host_name, token_path, token)
+        self.__qh = QueryHelper(host_name=host_name, token=self.token)
 
     def update_relationship(self):
         pass
