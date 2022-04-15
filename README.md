@@ -55,7 +55,7 @@ All helpers requires 3 parameters to initialize. Either `token_path` or `token` 
 ---
 
 ## AzureDigitalTwinsTools.Helper.ModelHelper
-`class AzureDigitalTwinsTools.Helper.RelationshipHelper(host_name, token_path=None, token=None)`  
+`class AzureDigitalTwinsTools.Helper.ModelHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the searching requirements of model.  
 
