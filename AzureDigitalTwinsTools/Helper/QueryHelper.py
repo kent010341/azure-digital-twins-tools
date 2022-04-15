@@ -5,8 +5,8 @@ from .RequestHelper import RequestHelper
 # https://docs.microsoft.com/zh-tw/azure/digital-twins/how-to-query-graph
 class QueryHelper(RequestHelper):
 
-    def __init__(self, token_path, host_name):
-        super().__init__(token_path, host_name)
+    def __init__(self, host_name, token_path=None, token=None):
+        super().__init__(host_name, token_path, token)
 
     def query_twins(self, dtid=None, condition=None):
         query = 'SELECT * FROM digitaltwins'

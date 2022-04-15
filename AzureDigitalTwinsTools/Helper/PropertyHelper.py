@@ -4,8 +4,8 @@ from .RequestHelper import RequestHelper
 
 class PropertyHelper(RequestHelper):
 
-    def __init__(self, token_path, host_name):
-        super().__init__(token_path, host_name)
+    def __init__(self, host_name, token_path=None, token=None):
+        super().__init__(host_name, token_path, token)
         self.__is_preparing_p = False
         self.__is_preparing_c = False
 
