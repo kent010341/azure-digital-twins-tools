@@ -1,4 +1,5 @@
 __pycache__
 .DS_Store
 local_test_*
+demo_*
 bearer-token.txt
