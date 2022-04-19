@@ -31,8 +31,12 @@ class DeployHelper:
         relationships_storage = list()
 
         # used for making this process atomic, if something failed, remove all things in these two list
-        succeed_twins = list()
-        succeed_relationships = list()
+        if atomic:
+            succeed_twins = list()
+            succeed_relationships = list()
+        else:
+            failed_twins = list()
+            failed_relationships = list()
 
         for _, row in df.iterrows():
             modelid = row['modelid']
@@ -60,12 +64,15 @@ class DeployHelper:
                         init_component=init_component
                     )
                     print('Add DT: dtid={}, modelid={}'.format(dtid, modelid))
-                    succeed_twins.append(dtid)
+                    if atomic:
+                        succeed_twins.append(dtid)
                 except Exception as e:
                     print('Exception:', e)
                     if atomic:
                         self.__atomic(succeed_twins)
-                    return
+                        return
+                    else:
+                        failed_twins.append((modelid, dtid, init_property, init_component))
 
             # avoid adding relationship before the target is created, store it first
             if not pd.isna(rtarget) and not pd.isna(rname):
@@ -83,12 +90,19 @@ class DeployHelper:
 
                 print('Add relationship: source={}, target={}, relationship_name={}, relationship_id={}'
                     .format(r[0], r[1], r[2], rid))
-                succeed_relationships.append((r[0], rid))
+                if atomic:
+                    succeed_relationships.append((r[0], rid))
             except Exception as e:
                 print('Exception:', e)
                 if atomic:
                     self.__atomic(succeed_twins, succeed_relationships)
-                return
+                    return
+                else:
+                    failed_relationships.append(r)
+
+        if not atomic:
+            print('\'atomic\' is False, start creating csv with failed twins and relationships.')
+            self.__failed_csv(path, failed_twins, failed_relationships)
 
     def clear(self):
         rs = self.__qh.query_relationships()
@@ -118,3 +132,54 @@ class DeployHelper:
         for dtid in succeed_twins:
             self.__th.delete_twin(dtid=dtid)
             print('Delete twin:', dtid)
+
+    def __failed_csv(self, csv_path, failed_twins, failed_relationships):
+        csv_data = {
+            'modelid': [],
+            'dtid': [],
+            'init_property': [],
+            'init_component': [],
+            'rname': [],
+            'rtarget': []
+        }
+
+        for t in failed_twins:
+            csv_data['modelid'].append(t[0])
+            csv_data['dtid'].append(t[1])
+
+            if len(t[2]) != 0:
+                csv_data['init_property'].append(
+                    json.dumps(t[2], ensure_ascii=False))
+            else:
+                csv_data['init_property'].append(None)
+
+            if len(t[3]) != 0:
+                csv_data['init_component'].append(
+                    json.dumps(t[3], ensure_ascii=False))
+            else:
+                csv_data['init_component'].append(None)
+            
+            csv_data['rname'].append(None)
+            csv_data['rtarget'].append(None)
+
+            print('Add failed twin: modelid={}, dtid={}, init_property={}, init_component={}'.format(
+                t[0], t[1], t[2], t[3]
+            ))
+
+        for r in failed_relationships:
+            csv_data['modelid'].append(None)
+            csv_data['dtid'].append(r[0])
+            csv_data['init_property'].append(None)
+            csv_data['init_component'].append(None)
+            csv_data['rname'].append(r[2])
+            csv_data['rtarget'].append(r[1])
+
+            print('Add failed relationship: dtid={}, rtarget={}, rname={}'.format(
+                r[0], r[1], r[2]
+            ))
+
+        df = pd.DataFrame(csv_data)
+        opt_path = csv_path[:-len('.csv')] + '_failed.csv'
+        df.to_csv(opt_path, index=False)
+
+        print('File saved, path:', opt_path)
