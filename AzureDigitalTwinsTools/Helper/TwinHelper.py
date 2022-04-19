@@ -7,7 +7,7 @@ class TwinHelper(RequestHelper):
 
     def __init__(self, host_name, token_path=None, token=None):
         super().__init__(host_name, token_path, token)
-        self.__mh = ModelHelper(host_name=host_name, token=self.token)
+        self.__mh = ModelHelper(host_name=host_name, token=self.get_token())
         self.__found_component = {}
         
     ##
@@ -58,7 +58,8 @@ class TwinHelper(RequestHelper):
                 body[k] = component_value
         else:
             if self.__found_component.get(model) == None:
-                self.__found_component = self.__mh.find_model_components_list(model)
+                self.__mh.find_model_components_list(model)
+                self.__found_component = self.__mh.get_component_dict()
                 
             component_list = self.__found_component[model]
 
