@@ -53,7 +53,8 @@ class ModelHelper(RequestHelper):
 
         self.__store_to_dict(curr_component_dict)
 
-        return curr_component_dict
+    def get_component_dict(self):
+        return self.__component_dict
 
     def __append_component(self, curr_component_dict, contents, curr_model):
         for content in contents:
@@ -73,6 +74,5 @@ class ModelHelper(RequestHelper):
         return curr_component_dict
 
     def __store_to_dict(self, curr_component_dict):
-        # curr_component_dict + self.__component_dict
         for k, v in curr_component_dict.items():
             self.__component_dict[k] = v

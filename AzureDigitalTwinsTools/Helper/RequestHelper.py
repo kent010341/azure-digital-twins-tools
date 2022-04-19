@@ -4,7 +4,7 @@ class RequestHelper:
         if token_path != None:
             self.__read_token(token_path)
         elif token != None:
-            self.token = token
+            self.__token = token
         else:
             raise ValueError('Either token_path or token should be given.')
 
@@ -17,6 +17,9 @@ class RequestHelper:
 
         return response
 
+    def get_token(self):
+        return self.__token
+
     def __read_token(self, path):
         opt = ''
         with open(path, 'r') as f:
@@ -24,12 +27,12 @@ class RequestHelper:
 
         assert opt != '', 'Token is empty.'
 
-        self.token = 'Bearer ' + opt
+        self.__token = 'Bearer ' + opt
 
     def __get_headers(self):
         return {
             'Content-Type': 'application/json', 
-            'Authorization': self.token
+            'Authorization': self.__token
         }
 
     def __get_url(self, uri, params):
