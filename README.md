@@ -10,6 +10,7 @@
 * [ModelHelper](#azuredigitaltwinstoolshelpermodelhelper)  
   * [list_models](#list_models)  
   * [find_model_components_list](#find_model_components_list)
+  * [picker](#picker)
 * [RelationshipHelper](#azuredigitaltwinstoolshelperrelationshiphelper)  
   * [list_relationships](#list_relationships)
   * [add_relationship](#add_relationship)
@@ -77,6 +78,23 @@ Get a list of the name of components of `model`.
 * Parameters  
   * `model`: `str`  
     Model ID.
+
+### picker
+`picker(model_folder, model_list, output_folder='picked')`  
+
+Instead of upload all models of a folder, you can use this method the pick the necessary models.  
+This method will copy the models of `model_list`, including the models which depend on it from `model_folder` to the folder `output_folder`.  
+You can use Azure Digital Twins Explorer or [Azure CLI command](https://docs.microsoft.com/en-us/cli/azure/dt/model?view=azure-cli-latest) to upload the folder of picked models.  
+
+* Parameters  
+  * `model_folder`: `str`  
+    Folder path storing lots of models. This method will pick the models from here.  
+  
+  * `model_list`: `list` of `str`  
+    List of model IDs.  
+
+  * `output_folder`: `str`  
+    The picked models will be copied to here.
 
 ---
 
