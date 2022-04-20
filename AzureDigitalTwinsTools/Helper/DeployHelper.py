@@ -100,7 +100,7 @@ class DeployHelper:
                 else:
                     failed_relationships.append(r)
 
-        if not atomic:
+        if not atomic and (len(failed_twins) != 0 or len(failed_relationships) != 0):
             print('\'atomic\' is False, start creating csv with failed twins and relationships.')
             self.__failed_csv(path, failed_twins, failed_relationships)
 
