@@ -1,5 +1,7 @@
 import requests
 import json
+import os
+import shutil
 from .RequestHelper import RequestHelper
 
 class ModelHelper(RequestHelper):
@@ -56,6 +58,18 @@ class ModelHelper(RequestHelper):
     def get_component_dict(self):
         return self.__component_dict
 
+    def picker(self, model_folder, model_list, output_folder='picked'):
+        self.__model_dict = self.__expand_folder(model_folder)
+        if not os.path.exists(output_folder):
+            os.mkdir(output_folder)
+
+        for model in model_list:
+            if self.__model_dict.get(model) == None:
+                print(model, 'not found.')
+            else:
+                self.__picked = list()
+                self.__picking_model(model, output_folder)
+
     def __append_component(self, curr_component_dict, contents, curr_model):
         for content in contents:
             if content['@type'] == 'Component':
@@ -76,3 +90,90 @@ class ModelHelper(RequestHelper):
     def __store_to_dict(self, curr_component_dict):
         for k, v in curr_component_dict.items():
             self.__component_dict[k] = v
+
+    def __expand_folder(self, path, curr_dict={}):
+        for d in os.listdir(path):
+            subpath = self.__get_full_path(path, d)
+
+            if os.path.isdir(subpath):
+                curr_dict = self.__expand_folder(subpath, curr_dict)
+
+            else:
+                model_detail = self.__read_dtdl(subpath)
+
+                if model_detail != None:
+                    curr_dict[model_detail['modelid']] = model_detail
+
+        return curr_dict
+
+    def __get_full_path(self, path, subfolder):
+        sep = '' if path[-1] == '/' else '/'
+
+        return path + sep + subfolder
+
+    def __read_dtdl(self, path):
+        if path[-len('.json'):] != '.json':
+            return None
+
+        with open(path, 'r') as f:
+            dtdl = f.read()
+
+        try:
+            dtdl = json.loads(dtdl)
+        except:
+            print('Parsing DTDL failed. path:', path)
+            return None
+
+        depended_by = False
+        modelid = dtdl['@id']
+        extends = dtdl.get('extends', ()) # could be list, string, None
+
+        if len(extends) != 0:
+            depended_by = True
+
+        if isinstance(extends, str):
+            extends = [extends]
+
+        rtarget = list()
+        component = list()
+        for content in dtdl.get('contents',()):
+            # relationship target
+            if content['@type'] == 'Relationship' and content.get('target') != None:
+                rtarget.append(content['target'])
+                depended_by = True
+            elif content['@type'] == 'Component':
+                component.append(content['schema'])
+                depended_by = True
+
+        return {
+            'path': path,
+            'modelid': modelid,
+            'extends': extends,
+            'component': component,
+            'rtarget': rtarget,
+            'depended_by': depended_by
+        }
+
+    def __picking_model(self, model, output_folder):
+        if model in self.__picked:
+            return
+        else:
+            self.__picked.append(model)
+
+        model_detail = self.__model_dict[model]
+        shutil.copy2(model_detail['path'], output_folder)
+
+        print('Add:', model)
+
+        if model_detail['depended_by']:
+            # extends
+            for e in model_detail.get('extends'):
+                self.__picking_model(e, output_folder)
+
+            # component
+            for c in model_detail['component']:
+                self.__picking_model(c, output_folder)
+
+            # rtarget
+            for r in model_detail['rtarget']:
+                self.__picking_model(r, output_folder)
