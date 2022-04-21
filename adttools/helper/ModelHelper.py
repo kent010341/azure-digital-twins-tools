@@ -39,12 +39,14 @@ class ModelHelper(RequestHelper):
 
             if dict_models[curr_model].get('contents') != None:
                 curr_component_dict = self.__append_component(
-                    curr_component_dict, dict_models[curr_model]['contents'], curr_model)
+                    curr_component_dict, 
+                    dict_models[curr_model]['contents'], 
+                    curr_model
+                )
 
-            if dict_models[curr_model].get('extends') != None:
-                # find parent
-                curr_model = dict_models[curr_model]['extends']
-
+            # find parent
+            curr_model = dict_models[curr_model].get('extends')
+            if curr_model != None:
                 # check if the parent has searched, if so, add to the list
                 if self.__component_dict.get(curr_model) != None:
                     curr_component_dict = self.__append_with_found(
@@ -53,7 +55,8 @@ class ModelHelper(RequestHelper):
             else:
                 is_searching = False
 
-        self.__store_to_dict(curr_component_dict)
+        # update self.__component_dict
+        self.__component_dict = self.__component_dict or curr_component_dict
 
     def get_component_dict(self):
         return self.__component_dict
@@ -87,10 +90,6 @@ class ModelHelper(RequestHelper):
 
         return curr_component_dict
 
-    def __store_to_dict(self, curr_component_dict):
-        for k, v in curr_component_dict.items():
-            self.__component_dict[k] = v
-
     def __expand_folder(self, path, curr_dict={}):
         for d in os.listdir(path):
             subpath = self.__get_full_path(path, d)
@@ -112,7 +111,7 @@ class ModelHelper(RequestHelper):
         return path + sep + subfolder
 
     def __read_dtdl(self, path):
-        if path[-len('.json'):] != '.json':
+        if not path.endswith('.json'):
             return None
 
         with open(path, 'r') as f:
@@ -156,7 +155,7 @@ class ModelHelper(RequestHelper):
 
     def __picking_model(self, model, output_folder):
         if model in self.__picked:
-            return
+            return None
         else:
             self.__picked.append(model)
 

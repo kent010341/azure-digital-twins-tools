@@ -70,9 +70,10 @@ class DeployHelper:
                     print('Exception:', e)
                     if atomic:
                         self.__atomic(succeed_twins)
-                        return
+                        return None
                     else:
-                        failed_twins.append((modelid, dtid, init_property, init_component))
+                        failed_twins.append(
+                            (modelid, dtid, init_property, init_component))
 
             # avoid adding relationship before the target is created, store it first
             if not pd.isna(rtarget) and not pd.isna(rname):
@@ -96,11 +97,11 @@ class DeployHelper:
                 print('Exception:', e)
                 if atomic:
                     self.__atomic(succeed_twins, succeed_relationships)
-                    return
+                    return None
                 else:
                     failed_relationships.append(r)
 
-        if not atomic and (len(failed_twins) != 0 or len(failed_relationships) != 0):
+        if not atomic and (failed_twins or failed_relationships):
             print('\'atomic\' is False, start creating csv with failed twins and relationships.')
             self.__failed_csv(path, failed_twins, failed_relationships)
 
