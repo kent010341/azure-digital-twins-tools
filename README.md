@@ -1,4 +1,4 @@
-# AzureDigitalTwinsTools
+# adttools
 
 ## System Requirement
 * Python 3.6 or above
@@ -38,7 +38,7 @@
 
 ---
 
-## AzureDigitalTwinsTools.Helper
+## adttools.helper
 All helpers requires 3 parameters to initialize. Either `token_path` or `token` should be given.  
     
 * `host_name`: `str`  
@@ -55,8 +55,8 @@ All helpers requires 3 parameters to initialize. Either `token_path` or `token` 
 
 ---
 
-## AzureDigitalTwinsTools.Helper.ModelHelper
-`class AzureDigitalTwinsTools.Helper.ModelHelper(host_name, token_path=None, token=None)`  
+## adttools.helper.ModelHelper
+`class adttools.helper.ModelHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the searching requirements of model.  
 
@@ -98,8 +98,8 @@ You can use Azure Digital Twins Explorer or [Azure CLI command](https://docs.mic
 
 ---
 
-## AzureDigitalTwinsTools.Helper.RelationshipHelper
-`class AzureDigitalTwinsTools.Helper.RelationshipHelper(host_name, token_path=None, token=None)`  
+## adttools.helper.RelationshipHelper
+`class adttools.helper.RelationshipHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the CRUD requirements of relationships between digital twins.
 
@@ -198,8 +198,8 @@ If `target` is specified, it will only delete the relationships which the target
 
 ---
 
-## AzureDigitalTwinsTools.Helper.PropertyHelper
-`class AzureDigitalTwinsTools.Helper.PropertyHelper(host_name, token_path=None, token=None)`  
+## adttools.helper.PropertyHelper
+`class adttools.helper.PropertyHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the CRUD requirements of properties of digital twins, including the properties of a component.
 
@@ -208,7 +208,7 @@ Except for the method `get_twin_detail`, the other methods are like a builder pa
 e.g.,  
 
 ```
-from AzureDigitalTwinsTools.Helper import PropertyHelper
+from adttools.helper import PropertyHelper
 
 ph = PropertyHelper(token_path="...", host_name="...")
 ph.prepare_property(dtid="Room1")
@@ -286,8 +286,8 @@ Add an "remove" process to current updating process.
 
 ---
 
-## AzureDigitalTwinsTools.Helper.TwinHelper
-`class AzureDigitalTwinsTools.Helper.TwinHelper(host_name, token_path=None, token=None)`  
+## adttools.helper.TwinHelper
+`class adttools.helper.TwinHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the basic requirements of digital twins.  
 
@@ -322,8 +322,8 @@ Delete a digital twin with digital twin ID.
 
 ---
 
-## AzureDigitalTwinsTools.Helper.QueryHelper
-`class AzureDigitalTwinsTools.Helper.QueryHelper(host_name, token_path=None, token=None)`  
+## adttools.helper.QueryHelper
+`class adttools.helper.QueryHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the requirements of querying digital twins and relationships.  
 
@@ -377,8 +377,8 @@ Run a query string.
 
 ---
 
-## AzureDigitalTwinsTools.Helper.DeployHelper
-`class AzureDigitalTwinsTools.Helper.DeployHelper(host_name, token_path=None, token=None)`  
+## adttools.helper.DeployHelper
+`class adttools.helper.DeployHelper(host_name, token_path=None, token=None)`  
 
 This class can help you deal with the requirements of batch deployment of digital twins.  
 
