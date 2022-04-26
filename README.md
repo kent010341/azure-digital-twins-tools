@@ -70,15 +70,32 @@ If `model` is specified, list all related models including extending and compone
 * Parameters  
   * `model`: `str`  
     Model ID.
+    
+* Return  
+  Type: `dict`  
+  Dictionary of each models.
 
 ### find_model\_components\_list
 `find_model_components_list(model)`  
 
 Get a list of the name of components of `model`.  
+This method will affect a private variable which has a getter method `get_component_dict()`.
 
 * Parameters  
   * `model`: `str`  
     Model ID.
+    
+* Return  
+  `None`  
+  
+### get\_component\_dict
+`get_component_dict()`  
+
+Get current found components of models.  
+
+* Return  
+  Type: `dict` of `list` of `str`  
+  The key is model, value is a list of component of this model.
 
 ### picker
 `picker(model_folder, model_list, output_folder='picked')`  
@@ -96,6 +113,9 @@ You can use Azure Digital Twins Explorer or [Azure CLI command](https://docs.mic
 
   * `output_folder`: `str`  
     The picked models will be copied to here.
+    
+* Return  
+  `None`  
 
 ---
 
@@ -231,7 +251,12 @@ Get the details of a digital twin (twin ID: `dtid`), including properties.
 
 * Parameters  
   * `dtid`: `str`  
-    Digital twin ID. 
+    Digital twin ID.  
+
+* Return  
+  Type: `Response` (from the library `requests`)  
+  To get the content (JSON format string) of response, use `.text`.  
+  To get the status code of this HTTP request, use `.status_code`.
 
 ### prepare_property
 `prepare(dtid)`  
@@ -242,6 +267,9 @@ Start a process for updating property. You can use the methods `update_property`
   * `dtid`: `str`  
     Digital twin ID. 
 
+* Return  
+  `self`
+
 ### prepare_component
 `prepare_component(dtid, component_path)`
 
@@ -250,6 +278,9 @@ Start a process for updating component. You can use the methods `update_property
 * Parameters  
   * `dtid`: `str`  
     Digital twin ID.  
+
+* Return  
+  `self`
 
 ### prepare_relationship
 `prepare_relationship(source, rid)`
@@ -263,10 +294,16 @@ Start a process for updating properties of a relationship. You can use the metho
   * `rid`: `str`  
     ID of the relationship.  
 
+* Return  
+  `self`
+
 ### submit
 `submit()`  
 
 Submit the process.  
+
+* Return  
+  `None`
 
 ### update_property
 `update_property(key, value)`  
@@ -280,6 +317,9 @@ Add an "update" process to current updating process.
   * `value`: `str`, `int` or `float`  
     Value of property.  
 
+* Return  
+  `self`
+
 ### add_property
 `add_property(key, value)`  
 
@@ -292,6 +332,9 @@ Add an "add" process to current updating process.
   * `value`: `str`, `int` or `float`  
     Value of property.  
 
+* Return  
+  `self`
+
 ### remove_property
 `remove_property(key)`  
 
@@ -300,6 +343,9 @@ Add an "remove" process to current updating process.
 * Parameters  
   * `key`: `str`  
     Key of property.  
+
+* Return  
+  `self`
 
 ---
 
@@ -328,6 +374,10 @@ Add a digital twin with specified model ID, the initial value of properties and 
     Initial value given to the components  
     should look like `{"c_1": {"c_1_property": "some value"}}`  
 
+* Return  
+  Type: `Response` (from the library `requests`)  
+  To get the status code of this HTTP request, use `.status_code`.
+
 ### delete_twin
 `delete_twin(dtid)`  
 
@@ -336,6 +386,10 @@ Delete a digital twin with digital twin ID.
 * Parameters  
   * `dtid`: `str`  
     Digital twin ID  
+
+* Return  
+  Type: `Response` (from the library `requests`)  
+  To get the status code of this HTTP request, use `.status_code`.
 
 ---
 
@@ -357,7 +411,7 @@ Query twins.
     Other condition can be placed here. 
 
 * Return  
-  Type: `list`  
+  Type: `list` of `dict`  
   The matched twins.
 
 ### query_relationships
@@ -376,7 +430,7 @@ Query relationships.
     Relationship name. 
 
 * Return  
-  Type: `list`  
+  Type: `list` of `dict`  
   The matched relationships.
 
 ### run_query
@@ -389,7 +443,7 @@ Run a query string.
     Query string.  
 
 * Return  
-  Type: `list`  
+  Type: `list` of `dict`  
   The matched objects.
 
 ---
@@ -422,7 +476,13 @@ Deploy digital twins with a csv file.
     If set as `True`, any step failed during this deployment will start a deletion process to delete the twins and relationships just created.  
     If set as `False`, any step failed during this deployment will store to a CSV file (file name: `<file name>_failed.csv`) containing the failed twins and relationships. You can fix it and re-deploy it.  
 
+* Return  
+  `None`
+
 ### clear
 `clear()`
 
 Clean all twins and relationships.
+
+* Return  
+  `None`
