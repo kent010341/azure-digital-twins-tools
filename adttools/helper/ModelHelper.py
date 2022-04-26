@@ -56,7 +56,7 @@ class ModelHelper(RequestHelper):
                 is_searching = False
 
         # update self.__component_dict
-        self.__component_dict = self.__component_dict or curr_component_dict
+        self.__component_dict.update(curr_component_dict)
 
     def get_component_dict(self):
         return self.__component_dict
