@@ -4,3 +4,5 @@ local_test_*
 demo_*
 bearer-token.txt
 picked
+*.egg-info/
+dist/
