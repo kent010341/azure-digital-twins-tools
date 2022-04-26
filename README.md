@@ -123,9 +123,9 @@ If `rname` is specified, the response will only contain the relationships with t
   To get the status code of this HTTP request, use `.status_code`.
 
 ### add\_relationship
-`add_relationship(source, target, rname)`  
+`add_relationship(source, target, rname, init_property={})`  
 
-Add a relationship from `source` to `target` with name `rname`.  
+Add a relationship from `source` to `target` with name `rname`. The properties of relationship can be add with `init_property`.  
 
 * Parameters  
   * `source`: `str`  
@@ -136,6 +136,10 @@ Add a relationship from `source` to `target` with name `rname`.
 
   * `rname`: `str`  
     Name of the relationship.  
+
+  * `init_property`: `dict`  
+    Initial value given to the properties.  
+    should look like `{"p_1": 123, "p_2":{"sub_p_1": "some value"}}`  
 
 * Return  
   Type: `Response` (from the library `requests`)  
