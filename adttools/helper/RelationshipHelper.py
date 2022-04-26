@@ -10,9 +10,6 @@ class RelationshipHelper(RequestHelper):
         super().__init__(host_name, token_path, token)
         self.__qh = QueryHelper(host_name=host_name, token=self.get_token())
 
-    def update_relationship(self):
-        pass
-
     def list_relationships(self, source, rname=None):
         # https://docs.microsoft.com/en-us/rest/api/digital-twins/dataplane/twins/digitaltwins_listrelationships
         method = requests.get
@@ -20,12 +17,13 @@ class RelationshipHelper(RequestHelper):
 
         return self.request(uri, method, uri_params=rname)
 
-    def add_relationship(self, source, target, rname):
+    def add_relationship(self, source, target, rname, init_property={}):
         # https://docs.microsoft.com/en-us/rest/api/digital-twins/dataplane/twins/digitaltwins_addrelationship
         method = requests.put
         uri = 'digitaltwins/{}/relationships/{}'.format(source, str(uuid.uuid4()))
-        body = '{"$targetId": "' + target + \
-                '","$relationshipName": "' + rname + '"}'
+        
+        body = {'$targetId': target, '$relationshipName': rname}
+        body.update(init_property)
 
         return self.request(uri, method, body=body)
 

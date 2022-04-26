@@ -21,6 +21,7 @@
   * [get_twin_detail](#get_twin_detail)  
   * [prepare_property](#prepare_property)
   * [prepare_component](#prepare_component)
+  * [prepare_relationship](#prepare_relationship)
   * [submit](#submit)
   * [update_property](#update_property)
   * [add_property](#add_property)
@@ -122,9 +123,9 @@ If `rname` is specified, the response will only contain the relationships with t
   To get the status code of this HTTP request, use `.status_code`.
 
 ### add\_relationship
-`add_relationship(source, target, rname)`  
+`add_relationship(source, target, rname, init_property={})`  
 
-Add a relationship from `source` to `target` with name `rname`.  
+Add a relationship from `source` to `target` with name `rname`. The properties of relationship can be add with `init_property`.  
 
 * Parameters  
   * `source`: `str`  
@@ -135,6 +136,10 @@ Add a relationship from `source` to `target` with name `rname`.
 
   * `rname`: `str`  
     Name of the relationship.  
+
+  * `init_property`: `dict`  
+    Initial value given to the properties.  
+    should look like `{"p_1": 123, "p_2":{"sub_p_1": "some value"}}`  
 
 * Return  
   Type: `Response` (from the library `requests`)  
@@ -244,7 +249,19 @@ Start a process for updating component. You can use the methods `update_property
 
 * Parameters  
   * `dtid`: `str`  
-    Digital twin ID.
+    Digital twin ID.  
+
+### prepare_relationship
+`prepare_relationship(source, rid)`
+
+Start a process for updating properties of a relationship. You can use the methods `update_property`, `add_property`, `remove_property` after calling this method.  
+
+* Parameters  
+  * `source`: `str`  
+    Source digital twin ID.  
+
+  * `rid`: `str`  
+    ID of the relationship.  
 
 ### submit
 `submit()`  
@@ -387,13 +404,15 @@ This class can help you deal with the requirements of batch deployment of digita
 
 Deploy digital twins with a csv file.  
 
-* Columns of this CSV file should be `modelid`, `dtid`, `init_property`, `init_component`, `rtarget`, `rname`.  
+* Columns of this CSV file should be `modelid`, `dtid`, `init_property`, `init_component`, , `rname`, `rtarget`, `init_rproperty`.  
+  `init_property`, `init_component` and `init_rproperty` are optional columns.
   * `modelid`: model ID
   * `dtid`: Twin ID
   * `init_property`: (JSON format) Can be empty, the initial value of properties.
   * `init_component`: (JSON format) Can be empty, the initial value of components.
   * `rname`: Relationship name, if `rname` is specified, `rtarget` is required. If multiple relationships are required, just add a new line without `modelid` and using an existing `dtid`.
   * `rtarget`: Target twin ID if a relationship (`rname`) is specified.
+  * `init_rproperty`: Initial value of properties of relationship if a relationship (`rname`) is specified.
 
 * Parameters  
   * `path`: `str`  

@@ -47,9 +47,7 @@ class TwinHelper(RequestHelper):
 
     def __get_add_body(self, model, init_property, init_component, search=False):
         body = {'$metadata': {'$model': model}}
-        
-        for k, v in init_property.items():
-            body[k] = v
+        body.update(init_property)
 
         if not search:
             for k, v in init_component.items():

@@ -14,7 +14,8 @@ class DeployHelper:
 
     ##
     # Deploy digital twins with a csv file.
-    # The columns should be 'modelid', 'dtid', 'init_property', 'init_component', 'rtarget', 'rname'
+    # The columns should be 'modelid', 'dtid', 'init_property', 'init_component', 'rname', 'rtarget', 'init_rproperty'
+    # 'init_property', 'init_component' and 'init_rproperty' are optional columns.
     #     'modelid': model ID
     #     'dtid': Twin ID
     #     'init_property': (JSON format) Can be empty, the initial value of properties
@@ -22,6 +23,7 @@ class DeployHelper:
     #     'rname': Relationship name, if 'rname' is specified, 'rtarget' is required.
     #              If multiple relationships are required, just add a new line without 'modelid' and using an existing 'dtid'.
     #     'rtarget': Target twin ID if a relationship is specified
+    #     'init_rproperty': Initial value of properties of relationship if a relationship is specified.
     ##
     def csv_deploy(self, path, atomic=True):
         # read csv
@@ -38,19 +40,38 @@ class DeployHelper:
             failed_twins = list()
             failed_relationships = list()
 
+        # check if optional columns exist
+        has_init_property = False
+        has_init_component = False
+        has_init_rproperty = False
+
+        for c in df.columns:
+            if c == 'init_property':
+                has_init_property = True
+            elif c == 'init_component':
+                has_init_component = True
+            elif c == 'init_rproperty':
+                has_init_rproperty = True
+
         for _, row in df.iterrows():
             modelid = row['modelid']
             dtid = row['dtid']
 
-            if pd.isna(row['init_property']):
+            # check empty data
+            if not has_init_property or pd.isna(row['init_property']):
                 init_property = {}
             else:
                 init_property = json.loads(row['init_property'])
 
-            if pd.isna(row['init_component']):
+            if not has_init_component or pd.isna(row['init_component']):
                 init_component = {}
             else:
                 init_component = json.loads(row['init_component'])
+
+            if not has_init_rproperty or pd.isna(row['init_rproperty']):
+                init_rproperty = {}
+            else:
+                init_rproperty = json.loads(row['init_rproperty'])
 
             rname = row['rname']
             rtarget = row['rtarget']
