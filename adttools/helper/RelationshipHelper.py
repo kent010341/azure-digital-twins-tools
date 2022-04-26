@@ -10,9 +10,6 @@ class RelationshipHelper(RequestHelper):
         super().__init__(host_name, token_path, token)
         self.__qh = QueryHelper(host_name=host_name, token=self.get_token())
 
-    def update_relationship(self):
-        pass
-
     def list_relationships(self, source, rname=None):
         # https://docs.microsoft.com/en-us/rest/api/digital-twins/dataplane/twins/digitaltwins_listrelationships
         method = requests.get

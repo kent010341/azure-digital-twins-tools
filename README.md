@@ -21,6 +21,7 @@
   * [get_twin_detail](#get_twin_detail)  
   * [prepare_property](#prepare_property)
   * [prepare_component](#prepare_component)
+  * [prepare_relationship](#prepare_relationship)
   * [submit](#submit)
   * [update_property](#update_property)
   * [add_property](#add_property)
@@ -244,7 +245,19 @@ Start a process for updating component. You can use the methods `update_property
 
 * Parameters  
   * `dtid`: `str`  
-    Digital twin ID.
+    Digital twin ID.  
+
+### prepare_relationship
+`prepare_relationship(source, rid)`
+
+Start a process for updating properties of a relationship. You can use the methods `update_property`, `add_property`, `remove_property` after calling this method.  
+
+* Parameters  
+  * `source`: `str`  
+    Source digital twin ID.  
+
+  * `rid`: `str`  
+    ID of the relationship.  
 
 ### submit
 `submit()`  
