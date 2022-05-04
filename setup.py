@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="adttools", # 
-    version="1.0.0",
+    version="1.0.1",
     author="kent010341",
     author_email="kent010341@gmail.com",
     description="Toolkit for calling Azure digital twins REST API.",
