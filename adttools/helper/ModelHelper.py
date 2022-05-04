@@ -90,20 +90,15 @@ class ModelHelper(RequestHelper):
 
         return curr_component_dict
 
-    def __expand_folder(self, path, curr_dict={}):
-        for d in os.listdir(path):
-            subpath = self.__get_full_path(path, d)
+    def __expand_folder(self, path):
+        model_dict = dict()
 
-            if os.path.isdir(subpath):
-                curr_dict = self.__expand_folder(subpath, curr_dict)
+        for root, _, files in os.walk(path):
+            for file in files:
+                model_detail = self.__read_dtdl(os.path.join(root, file))
+                model_dict[model_detail['modelid']] = model_detail
 
-            else:
-                model_detail = self.__read_dtdl(subpath)
-
-                if model_detail != None:
-                    curr_dict[model_detail['modelid']] = model_detail
-
-        return curr_dict
+        return model_dict
 
     def __get_full_path(self, path, subfolder):
         sep = '' if path[-1] == '/' else '/'
