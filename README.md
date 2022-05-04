@@ -11,6 +11,7 @@
   * [list_models](#list_models)  
   * [find_model_components_list](#find_model_components_list)
   * [picker](#picker)
+  * [get_component_dict](#get_component_dict)
 * [RelationshipHelper](#azuredigitaltwinstoolshelperrelationshiphelper)  
   * [list_relationships](#list_relationships)
   * [add_relationship](#add_relationship)
@@ -64,7 +65,7 @@ This class can help you deal with the searching requirements of model.
 ### list_models
 `list_models(model=None)`  
 
-List all model if `model` is specified.  
+List all model if `model` is not specified.  
 If `model` is specified, list all related models including extending and component.  
 
 * Parameters  
@@ -407,7 +408,7 @@ Query twins.
   * `dtid`: `str` (Default: `None`)  
     Source digital twin ID.  
 
-  * `condition `: `str` (Default: `None`)  
+  * `condition`: `str` (Default: `None`)  
     Other condition can be placed here. 
 
 * Return  
@@ -420,13 +421,13 @@ Query twins.
 Query relationships.
 
 * Parameters  
-  * `source `: `str` (Default: `None`)  
+  * `source`: `str` (Default: `None`)  
     Source digital twin ID.  
     
-  * `target `: `str` (Default: `None`)  
+  * `target`: `str` (Default: `None`)  
     Target digital twin ID.  
 
-  * `rname `: `str` (Default: `None`)  
+  * `rname`: `str` (Default: `None`)  
     Relationship name. 
 
 * Return  
@@ -439,7 +440,7 @@ Query relationships.
 Run a query string.
 
 * Parameters  
-  * `query `: `str`   
+  * `query`: `str`   
     Query string.  
 
 * Return  
