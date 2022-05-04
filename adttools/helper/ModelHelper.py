@@ -96,7 +96,8 @@ class ModelHelper(RequestHelper):
         for root, _, files in os.walk(path):
             for file in files:
                 model_detail = self.__read_dtdl(os.path.join(root, file))
-                model_dict[model_detail['modelid']] = model_detail
+                if model_detail != None:
+                    model_dict[model_detail['modelid']] = model_detail
 
         return model_dict
 
