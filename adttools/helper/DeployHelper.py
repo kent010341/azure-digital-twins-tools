@@ -25,7 +25,7 @@ class DeployHelper:
     #     'rtarget': Target twin ID if a relationship is specified
     #     'init_rproperty': Initial value of properties of relationship if a relationship is specified.
     ##
-    def csv_deploy(self, path, atomic=True):
+    def csv_deploy(self, path, atomic=False):
         # read csv
         df = pd.read_csv(path)
 

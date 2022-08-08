@@ -455,7 +455,7 @@ Run a query string.
 This class can help you deal with the requirements of batch deployment of digital twins.  
 
 ### csv_deploy
-`csv_deploy(path, atomic=True)`  
+`csv_deploy(path, atomic=False)`  
 
 Deploy digital twins with a csv file.  
 
